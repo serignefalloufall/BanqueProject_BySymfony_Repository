@@ -1,1 +1,11 @@
  wget https://get.symfony.com/cli/installer -O - | bash
+
+ pour creer la base de donne en symf on tape cette commande :
+  php bin/console doctrine:database:create
+
+
+    php bin/console make:controller NomController
+
+php bin/console make:entity pour creer entity
+
+symfony server:start pour demmarer l'aplication
