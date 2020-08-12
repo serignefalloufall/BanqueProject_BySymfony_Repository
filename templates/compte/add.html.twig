@@ -1,13 +1,13 @@
 {% extends 'accueil.html.twig' %}
 
-{% block title %}CompteController!!!{% endblock %}
+{% block title %} Gestion compte {% endblock %}
 
 {% block body %}
 
  
     <div class="contenue">
         <div class="error" id="message_error"></div>
-        <form action="http://localhost/mes_projets/BanqueProjectByOrm/Compte/add" method="POST" class="formClient" id="formClient">
+        <form action=" {{ path('addCompte')}} " method="POST" class="formClient" id="formClient">
 
             <fieldset class="fieldset">
                 <legend class="legend">Rechercher client</legend>
@@ -17,20 +17,13 @@
                         <label for="">Client:</label>
                         <select name="client_id" id="client_id" onchange="verifTypeClient()">
                             <option value="">Choisir client</option>
-                            <?php
-                            if(isset($listeClient)){
-                                foreach($listeClient as $l_client){   
-                            ?>
-                            <option value="<?php echo $l_client->getId(); ?>">
-                                <?php echo $l_client->getPrenom();?>
-                                <?php echo $l_client->getNom(); ?>
-                            </option>
-                            <?php      
-                                }  
-                            }        
-                            ?>
 
-                          
+                            {% for client in clients %}
+                            <option value="{{client.id}}">
+                                  {{client.prenom}} {{client.nom}}
+                            </option>
+                            {% endfor %}
+
                         </select>
 
                     </div>
@@ -46,53 +39,40 @@
                         <label for="">Type de compte:</label>
                         <select name="type_compte_id" id="selectCompte" onchange="myFunction()">
                             <option value="">Choisir un type de compte</option>
-                            <?php
-                            if(isset($listeTypeCompte)){
-                                foreach($listeTypeCompte as $l_typeCompte){   
-                            ?>
-                            <option value="<?php echo $l_typeCompte->getId(); ?>">
-                                <?php echo $l_typeCompte->getLibelle();?>
-                              
+                            
+                            {% for t_compte in listeTypeCompte %}
+                            <option value="{{t_compte.id}}">
+                                {{t_compte.libelle}}
                             </option>
-                            <?php      
-                                }  
-                            }        
-                            ?>
-
+                            {% endfor %}
                          
                         </select>
                     </div>
                     <div>   
                         <label for="">Date d'ouverture</label>
-                        <?php echo"<input type='text' name='date_ouverture' id='date' value='$today' readonly/>";?>                      
+                        <input type='text' name='date_ouverture' id='date' value='{{today}}' readonly/>                    
                     </div>
                     <div>
                         <label for="">Numero compte</label>
-                        <?php echo"<input type='text' name='num_compte' id='numCompte' value='$numcompte' readonly/>";?>        
+                        <input type='text' name='num_compte' id='numCompte' value='{{numcompte}}' readonly/>     
                     </div>
                     <div>
                         <label for="">Numero agence</label>
                         <select name="agence_id" id="agence_id">
                             <option value="">Votre agence</option>
-                            <?php
-                            if(isset($listeAgence)){
-                                foreach($listeAgence as $l_typeAgence){   
-                            ?>
-                            <option value="<?php echo $l_typeAgence->getId(); ?>">
-                                <?php echo $l_typeAgence->getNom();?>
-                              
+                                
+                            {% for a in agences %}
+                            <option value="{{a.id}}">
+                                {{a.nom}}
                             </option>
-                            <?php      
-                                }  
-                            }        
-                            ?>
+                            {% endfor %}
 
                         </select>
 
                     </div>
                     <div>
                         <label for="">Cle rip</label>
-                        <?php echo"<input type='text' name='cle_rip' id='cleRip' value='$cleRip' readonly />";?>
+                        <input type='text' name='cle_rip' id='cleRip' value='{{cleRip}}' readonly />
                     </div>
 
                     <div class="dfermuture" id="dfermuture">

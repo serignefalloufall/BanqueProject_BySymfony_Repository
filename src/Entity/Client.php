@@ -24,10 +24,7 @@ class Client
      */
     private $type_client_id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Employeur::class, inversedBy="clients")
-     */
-    private $employeur_id;
+   
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
@@ -69,6 +66,13 @@ class Client
      */
     private $comptes;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Employeur::class, inversedBy="yes")
+     */
+    private $employeur_id;
+
+  
+
     public function __construct()
     {
         $this->comptes = new ArrayCollection();
@@ -91,17 +95,7 @@ class Client
         return $this;
     }
 
-    public function getEmployeurId(): ?Employeur
-    {
-        return $this->employeur_id;
-    }
-
-    public function setEmployeurId(?Employeur $employeur_id): self
-    {
-        $this->employeur_id = $employeur_id;
-
-        return $this;
-    }
+   
 
     public function getNom(): ?string
     {
@@ -217,4 +211,18 @@ class Client
 
         return $this;
     }
+
+    public function getEmployeurId(): ?Employeur
+    {
+        return $this->employeur_id;
+    }
+
+    public function setEmployeurId(?Employeur $employeur_id): self
+    {
+        $this->employeur_id = $employeur_id;
+
+        return $this;
+    }
+
+    
 }

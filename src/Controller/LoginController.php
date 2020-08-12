@@ -20,7 +20,7 @@ class LoginController extends AbstractController
      */
     public function login()
     {
-        return $this->redirectToRoute('accueil');
+        return $this->redirectToRoute('index');
     }
 
     

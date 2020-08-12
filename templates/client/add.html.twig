@@ -1,10 +1,11 @@
 {% extends 'accueil.html.twig' %}
 
-{% block title %}ClientController!!!{% endblock %}
+{% block title %} Gestion client {% endblock %}
 
 {% block body %}
 
  <div class="contenue">
+
         <div class="error" id="message_error"></div>
         <form action=" {{ path('addClient')}} " method="POST" class="formClient" id="formClient" onsubmit="return validationClient()">
 
@@ -15,18 +16,14 @@
                     <div>
                         <label for="">Type de client:</label>
                         <select name="type_client_id" id="type_client_id" onchange="verifTypeClient()">
+                           
                             <option value="">Choisir un type de client</option>
-                            <?php
-                            if(isset($listeTypeClient)){
-                                foreach($listeTypeClient as $l_typeClient){   
-                            ?>
-                            <option value="<?php echo $l_typeClient->getId(); ?>">
-                                <?php echo $l_typeClient->getLibelle(); ?>
+                            {% for t_client in listeTypeClient %}
+                            <option value="{{t_client.id}}">
+                                {{t_client.libelle}}
                             </option>
-                            <?php      
-                                }  
-                            }        
-                               ?>
+                            {% endfor %}
+                            
                         </select>
 
                         
@@ -61,16 +58,11 @@
                         <label for="">Liste employeur:</label>
                         <select name="employeur_id" id="employeur_id">
                             <option value="">Votre entreprise</option>
-                            <?php
-                           
-                           foreach($listeEmployeur as $l_employeur){   
-                       ?>
-                              
-                           //on va parcourir la liste de typeclient envoye au niveau de l'index
-                           <option value="<?= $l_employeur->getId(); ?>"><?= $l_employeur->getNom_employeur(); ?> </option>
-                       <?php      
-                           }          
-                          ?>
+                             {% for emp in employeurs %}
+                            <option value="{{emp.id}}">
+                                {{emp.nomemployeur}}
+                            </option>
+                            {% endfor %}
                         </select>
 
                     </div>
@@ -104,12 +96,12 @@
 
                     <div id="nomemployeur">
                         <label for="">Nom entreprise</label>
-                        <input type="text" name="nom_employeur" id="nom_employeur" placeholder="Nom entreprise.....">
+                        <input type="text" name="nomemployeur" id="nom_employeur" placeholder="Nom entreprise.....">
                     </div>
                    
                     <div id="adresseemployeur">
                         <label for="">Adresse entreprise</label>
-                        <input type="text" name="adresse_employeur" id="adresse_employeur" placeholder="Adresse entreprise.....">
+                        <input type="text" name="adresseemployeur" id="adresse_employeur" placeholder="Adresse entreprise.....">
                     </div>
 
 

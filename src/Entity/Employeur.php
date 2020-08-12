@@ -22,31 +22,31 @@ class Employeur
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
      */
-    private $numIdentification;
+    private $numidentification;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
      */
-    private $raisonSocial;
+    private $raisonsocial;
 
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
+     * @ORM\Column(type="string", length=60, nullable=true)
      */
-    private $nom_employeur;
+    private $nomemployeur;
 
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
+     * @ORM\Column(type="string", length=60, nullable=true)
      */
-    private $adresse_employeur;
+    private $adresseemployeur;
 
     /**
      * @ORM\OneToMany(targetEntity=Client::class, mappedBy="employeur_id")
      */
-    private $clients;
+    private $yes;
 
     public function __construct()
     {
-        $this->clients = new ArrayCollection();
+        $this->yes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -54,50 +54,50 @@ class Employeur
         return $this->id;
     }
 
-    public function getNumIdentification(): ?string
+    public function getNumidentification(): ?string
     {
-        return $this->numIdentification;
+        return $this->numidentification;
     }
 
-    public function setNumIdentification(?string $numIdentification): self
+    public function setNumidentification(?string $numidentification): self
     {
-        $this->numIdentification = $numIdentification;
+        $this->numidentification = $numidentification;
 
         return $this;
     }
 
-    public function getRaisonSocial(): ?string
+    public function getRaisonsocial(): ?string
     {
-        return $this->raisonSocial;
+        return $this->raisonsocial;
     }
 
-    public function setRaisonSocial(?string $raisonSocial): self
+    public function setRaisonsocial(?string $raisonsocial): self
     {
-        $this->raisonSocial = $raisonSocial;
+        $this->raisonsocial = $raisonsocial;
 
         return $this;
     }
 
-    public function getNomEmployeur(): ?string
+    public function getNomemployeur(): ?string
     {
-        return $this->nom_employeur;
+        return $this->nomemployeur;
     }
 
-    public function setNomEmployeur(?string $nom_employeur): self
+    public function setNomemployeur(?string $nomemployeur): self
     {
-        $this->nom_employeur = $nom_employeur;
+        $this->nomemployeur = $nomemployeur;
 
         return $this;
     }
 
-    public function getAdresseEmployeur(): ?string
+    public function getAdresseemployeur(): ?string
     {
-        return $this->adresse_employeur;
+        return $this->adresseemployeur;
     }
 
-    public function setAdresseEmployeur(?string $adresse_employeur): self
+    public function setAdresseemployeur(?string $adresseemployeur): self
     {
-        $this->adresse_employeur = $adresse_employeur;
+        $this->adresseemployeur = $adresseemployeur;
 
         return $this;
     }
@@ -105,28 +105,28 @@ class Employeur
     /**
      * @return Collection|Client[]
      */
-    public function getClients(): Collection
+    public function getYes(): Collection
     {
-        return $this->clients;
+        return $this->yes;
     }
 
-    public function addClient(Client $client): self
+    public function addYe(Client $ye): self
     {
-        if (!$this->clients->contains($client)) {
-            $this->clients[] = $client;
-            $client->setEmployeurId($this);
+        if (!$this->yes->contains($ye)) {
+            $this->yes[] = $ye;
+            $ye->setEmployeurId($this);
         }
 
         return $this;
     }
 
-    public function removeClient(Client $client): self
+    public function removeYe(Client $ye): self
     {
-        if ($this->clients->contains($client)) {
-            $this->clients->removeElement($client);
+        if ($this->yes->contains($ye)) {
+            $this->yes->removeElement($ye);
             // set the owning side to null (unless already changed)
-            if ($client->getEmployeurId() === $this) {
-                $client->setEmployeurId(null);
+            if ($ye->getEmployeurId() === $this) {
+                $ye->setEmployeurId(null);
             }
         }
 
