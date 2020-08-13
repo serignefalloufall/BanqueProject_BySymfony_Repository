@@ -20,24 +20,23 @@ class Agence
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $nom;
 
     /**
      * @ORM\ManyToOne(targetEntity=Region::class, inversedBy="agences")
-     * @ORM\JoinColumn(nullable=false)
      */
-    private $region_id;
+    private $region;
 
     /**
-     * @ORM\OneToMany(targetEntity=Compte::class, mappedBy="agence_id")
+     * @ORM\OneToMany(targetEntity=Compte::class, mappedBy="agence")
      */
-    private $comptes;
+    private $numcompte;
 
     public function __construct()
     {
-        $this->comptes = new ArrayCollection();
+        $this->numcompte = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -50,21 +49,21 @@ class Agence
         return $this->nom;
     }
 
-    public function setNom(string $nom): self
+    public function setNom(?string $nom): self
     {
         $this->nom = $nom;
 
         return $this;
     }
 
-    public function getRegionId(): ?Region
+    public function getRegion(): ?Region
     {
-        return $this->region_id;
+        return $this->region;
     }
 
-    public function setRegionId(?Region $region_id): self
+    public function setRegion(?Region $region): self
     {
-        $this->region_id = $region_id;
+        $this->region = $region;
 
         return $this;
     }
@@ -72,28 +71,28 @@ class Agence
     /**
      * @return Collection|Compte[]
      */
-    public function getComptes(): Collection
+    public function getNumcompte(): Collection
     {
-        return $this->comptes;
+        return $this->numcompte;
     }
 
-    public function addCompte(Compte $compte): self
+    public function addNumcompte(Compte $numcompte): self
     {
-        if (!$this->comptes->contains($compte)) {
-            $this->comptes[] = $compte;
-            $compte->setAgenceId($this);
+        if (!$this->numcompte->contains($numcompte)) {
+            $this->numcompte[] = $numcompte;
+            $numcompte->setAgence($this);
         }
 
         return $this;
     }
 
-    public function removeCompte(Compte $compte): self
+    public function removeNumcompte(Compte $numcompte): self
     {
-        if ($this->comptes->contains($compte)) {
-            $this->comptes->removeElement($compte);
+        if ($this->numcompte->contains($numcompte)) {
+            $this->numcompte->removeElement($numcompte);
             // set the owning side to null (unless already changed)
-            if ($compte->getAgenceId() === $this) {
-                $compte->setAgenceId(null);
+            if ($numcompte->getAgence() === $this) {
+                $numcompte->setAgence(null);
             }
         }
 

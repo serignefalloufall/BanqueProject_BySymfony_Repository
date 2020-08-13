@@ -15,7 +15,7 @@
                 
                     <div>
                         <label for="">Client:</label>
-                        <select name="client_id" id="client_id" onchange="verifTypeClient()">
+                        <select name="client" id="client_id" onchange="verifTypeClient()">
                             <option value="">Choisir client</option>
 
                             {% for client in clients %}
@@ -37,7 +37,7 @@
                 <div class="itemFieldset">
                     <div>
                         <label for="">Type de compte:</label>
-                        <select name="type_compte_id" id="selectCompte" onchange="myFunction()">
+                        <select name="typecompte" id="selectCompte" onchange="myFunction()">
                             <option value="">Choisir un type de compte</option>
                             
                             {% for t_compte in listeTypeCompte %}
@@ -50,15 +50,15 @@
                     </div>
                     <div>   
                         <label for="">Date d'ouverture</label>
-                        <input type='text' name='date_ouverture' id='date' value='{{today}}' readonly/>                    
+                        <input type='text' name='dateouverture' id='date' value='{{today}}' readonly/>                    
                     </div>
                     <div>
                         <label for="">Numero compte</label>
-                        <input type='text' name='num_compte' id='numCompte' value='{{numcompte}}' readonly/>     
+                        <input type='text' name='numcompte' id='numCompte' value='{{numcompte}}' readonly/>     
                     </div>
                     <div>
                         <label for="">Numero agence</label>
-                        <select name="agence_id" id="agence_id">
+                        <select name="agence" id="agence_id">
                             <option value="">Votre agence</option>
                                 
                             {% for a in agences %}
@@ -72,17 +72,17 @@
                     </div>
                     <div>
                         <label for="">Cle rip</label>
-                        <input type='text' name='cle_rip' id='cleRip' value='{{cleRip}}' readonly />
+                        <input type='text' name='clerip' id='cleRip' value='{{cleRip}}' readonly />
                     </div>
 
                     <div class="dfermuture" id="dfermuture">
                         <label for="">Date fermuture</label>
-                        <input type='date' name='date_fermuture' id='date_fermuture' value=''/>           
+                        <input type='date' name='datefermuture' id='date_fermuture' value=''/>           
                     </div>
 
                     <div class="frais" id="frais">
                         <label for="">Frais ouverture</label>
-                        <input type="text" name="frais_ouverture" id="fouverture" placeholder="Frais d'ouverture.....">
+                        <input type="text" name="fraisouverture" id="fouverture" placeholder="Frais d'ouverture.....">
                     </div> 
                         
                     <div class="agio" id="agio">

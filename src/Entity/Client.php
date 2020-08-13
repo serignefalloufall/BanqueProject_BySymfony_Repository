@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ClientRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\DecimalType;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,56 +23,52 @@ class Client
     /**
      * @ORM\ManyToOne(targetEntity=Typeclient::class, inversedBy="clients")
      */
-    private $type_client_id;
-
-   
+    private $typeclient;
 
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
+     * @ORM\ManyToOne(targetEntity=Employeur::class, inversedBy="clients")
+     */
+    private $employeur;
+
+    /**
+     * @ORM\Column(type="string", length=50)
      */
     private $nom;
 
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
+     * @ORM\Column(type="string", length=60)
      */
     private $prenom;
 
     /**
-     * @ORM\Column(type="string", length=100, nullable=true)
+     * @ORM\Column(type="string", length=60)
      */
     private $adresse;
 
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
+     * @ORM\Column(type="string", length=60, nullable=true)
      */
     private $tel;
 
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
+     * @ORM\Column(type="string", length=60)
      */
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
+     * @ORM\Column(type="string", length=60, nullable=true)
      */
     private $profession;
 
     /**
-     * @ORM\Column(type="decimal", precision=9, scale=0)
+     * @ORM\Column(type="decimal", length=60, nullable=true)
      */
     private $salaire;
 
     /**
-     * @ORM\OneToMany(targetEntity=Compte::class, mappedBy="client_id")
+     * @ORM\OneToMany(targetEntity=Compte::class, mappedBy="client")
      */
     private $comptes;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Employeur::class, inversedBy="yes")
-     */
-    private $employeur_id;
-
-  
 
     public function __construct()
     {
@@ -83,26 +80,36 @@ class Client
         return $this->id;
     }
 
-    public function getTypeClientId(): ?Typeclient
+    public function getTypeclient(): ?Typeclient
     {
-        return $this->type_client_id;
+        return $this->typeclient;
     }
 
-    public function setTypeClientId(?Typeclient $type_client_id): self
+    public function setTypeclient(?Typeclient $typeclient): self
     {
-        $this->type_client_id = $type_client_id;
+        $this->typeclient = $typeclient;
 
         return $this;
     }
 
-   
+    public function getEmployeur(): ?Employeur
+    {
+        return $this->employeur;
+    }
+
+    public function setEmployeur(?Employeur $employeur): self
+    {
+        $this->employeur = $employeur;
+
+        return $this;
+    }
 
     public function getNom(): ?string
     {
         return $this->nom;
     }
 
-    public function setNom(?string $nom): self
+    public function setNom(string $nom): self
     {
         $this->nom = $nom;
 
@@ -114,7 +121,7 @@ class Client
         return $this->prenom;
     }
 
-    public function setPrenom(?string $prenom): self
+    public function setPrenom(string $prenom): self
     {
         $this->prenom = $prenom;
 
@@ -126,7 +133,7 @@ class Client
         return $this->adresse;
     }
 
-    public function setAdresse(?string $adresse): self
+    public function setAdresse(string $adresse): self
     {
         $this->adresse = $adresse;
 
@@ -150,7 +157,7 @@ class Client
         return $this->email;
     }
 
-    public function setEmail(?string $email): self
+    public function setEmail(string $email): self
     {
         $this->email = $email;
 
@@ -174,7 +181,7 @@ class Client
         return $this->salaire;
     }
 
-    public function setSalaire(string $salaire): self
+    public function setSalaire(?string $salaire): self
     {
         $this->salaire = $salaire;
 
@@ -193,7 +200,7 @@ class Client
     {
         if (!$this->comptes->contains($compte)) {
             $this->comptes[] = $compte;
-            $compte->setClientId($this);
+            $compte->setClient($this);
         }
 
         return $this;
@@ -204,25 +211,11 @@ class Client
         if ($this->comptes->contains($compte)) {
             $this->comptes->removeElement($compte);
             // set the owning side to null (unless already changed)
-            if ($compte->getClientId() === $this) {
-                $compte->setClientId(null);
+            if ($compte->getClient() === $this) {
+                $compte->setClient(null);
             }
         }
 
         return $this;
     }
-
-    public function getEmployeurId(): ?Employeur
-    {
-        return $this->employeur_id;
-    }
-
-    public function setEmployeurId(?Employeur $employeur_id): self
-    {
-        $this->employeur_id = $employeur_id;
-
-        return $this;
-    }
-
-    
 }

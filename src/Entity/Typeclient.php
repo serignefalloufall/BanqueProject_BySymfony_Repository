@@ -20,12 +20,12 @@ class Typeclient
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $libelle;
 
     /**
-     * @ORM\OneToMany(targetEntity=Client::class, mappedBy="type_client_id")
+     * @ORM\OneToMany(targetEntity=Client::class, mappedBy="typeclient")
      */
     private $clients;
 
@@ -44,7 +44,7 @@ class Typeclient
         return $this->libelle;
     }
 
-    public function setLibelle(string $libelle): self
+    public function setLibelle(?string $libelle): self
     {
         $this->libelle = $libelle;
 
@@ -63,7 +63,7 @@ class Typeclient
     {
         if (!$this->clients->contains($client)) {
             $this->clients[] = $client;
-            $client->setTypeClientId($this);
+            $client->setTypeclient($this);
         }
 
         return $this;
@@ -74,8 +74,8 @@ class Typeclient
         if ($this->clients->contains($client)) {
             $this->clients->removeElement($client);
             // set the owning side to null (unless already changed)
-            if ($client->getTypeClientId() === $this) {
-                $client->setTypeClientId(null);
+            if ($client->getTypeclient() === $this) {
+                $client->setTypeclient(null);
             }
         }
 

@@ -20,12 +20,12 @@ class Region
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $nom;
 
     /**
-     * @ORM\OneToMany(targetEntity=Agence::class, mappedBy="region_id", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Agence::class, mappedBy="region")
      */
     private $agences;
 
@@ -44,7 +44,7 @@ class Region
         return $this->nom;
     }
 
-    public function setNom(string $nom): self
+    public function setNom(?string $nom): self
     {
         $this->nom = $nom;
 
@@ -63,7 +63,7 @@ class Region
     {
         if (!$this->agences->contains($agence)) {
             $this->agences[] = $agence;
-            $agence->setRegionId($this);
+            $agence->setRegion($this);
         }
 
         return $this;
@@ -74,8 +74,8 @@ class Region
         if ($this->agences->contains($agence)) {
             $this->agences->removeElement($agence);
             // set the owning side to null (unless already changed)
-            if ($agence->getRegionId() === $this) {
-                $agence->setRegionId(null);
+            if ($agence->getRegion() === $this) {
+                $agence->setRegion(null);
             }
         }
 

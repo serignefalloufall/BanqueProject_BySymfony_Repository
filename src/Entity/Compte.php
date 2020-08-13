@@ -20,121 +20,121 @@ class Compte
     /**
      * @ORM\ManyToOne(targetEntity=Client::class, inversedBy="comptes")
      */
-    private $client_id;
+    private $client;
 
     /**
      * @ORM\ManyToOne(targetEntity=Typecompte::class, inversedBy="comptes")
      */
-    private $type_compte_id;
+    private $typecompte;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Agence::class, inversedBy="comptes")
+     * @ORM\ManyToOne(targetEntity=Agence::class, inversedBy="numcompte")
      */
-    private $agence_id;
+    private $agence;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=60, nullable=true)
      */
-    private $num_compte;
+    private $numcompte;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=60, nullable=true)
      */
-    private $cle_rip;
+    private $clerip;
 
     /**
-     * @ORM\Column(type="decimal", precision=9, scale=0, nullable=true)
+     * @ORM\Column(type="decimal", precision=10, scale=0, nullable=true)
      */
-    private $frais_ouverture;
+    private $fraisouverture;
 
     /**
-     * @ORM\Column(type="decimal", precision=9, scale=0, nullable=true)
+     * @ORM\Column(type="decimal", precision=10, scale=0, nullable=true)
      */
     private $agio;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=60, nullable=true)
      */
-    private $date_ouverture;
+    private $dateouverture;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
      */
-    private $date_fermuture;
+    private $datefermuture;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getClientId(): ?Client
+    public function getClient(): ?Client
     {
-        return $this->client_id;
+        return $this->client;
     }
 
-    public function setClientId(?Client $client_id): self
+    public function setClient(?Client $client): self
     {
-        $this->client_id = $client_id;
+        $this->client = $client;
 
         return $this;
     }
 
-    public function getTypeCompteId(): ?int
+    public function getTypecompte(): ?Typecompte
     {
-        return $this->type_compte_id;
+        return $this->typecompte;
     }
 
-    public function setTypeCompteId(?int $type_compte_id): self
+    public function setTypecompte(?Typecompte $typecompte): self
     {
-        $this->type_compte_id = $type_compte_id;
+        $this->typecompte = $typecompte;
 
         return $this;
     }
 
-    public function getAgenceId(): ?Agence
+    public function getAgence(): ?Agence
     {
-        return $this->agence_id;
+        return $this->agence;
     }
 
-    public function setAgenceId(?Agence $agence_id): self
+    public function setAgence(?Agence $agence): self
     {
-        $this->agence_id = $agence_id;
+        $this->agence = $agence;
 
         return $this;
     }
 
-    public function getNumCompte(): ?string
+    public function getNumcompte(): ?string
     {
-        return $this->num_compte;
+        return $this->numcompte;
     }
 
-    public function setNumCompte(string $num_compte): self
+    public function setNumcompte(?string $numcompte): self
     {
-        $this->num_compte = $num_compte;
+        $this->numcompte = $numcompte;
 
         return $this;
     }
 
-    public function getCleRip(): ?string
+    public function getClerip(): ?string
     {
-        return $this->cle_rip;
+        return $this->clerip;
     }
 
-    public function setCleRip(string $cle_rip): self
+    public function setClerip(?string $clerip): self
     {
-        $this->cle_rip = $cle_rip;
+        $this->clerip = $clerip;
 
         return $this;
     }
 
-    public function getFraisOuverture(): ?string
+    public function getFraisouverture(): ?string
     {
-        return $this->frais_ouverture;
+        return $this->fraisouverture;
     }
 
-    public function setFraisOuverture(?string $frais_ouverture): self
+    public function setFraisouverture(?string $fraisouverture): self
     {
-        $this->frais_ouverture = $frais_ouverture;
+        $this->fraisouverture = $fraisouverture;
 
         return $this;
     }
@@ -151,26 +151,26 @@ class Compte
         return $this;
     }
 
-    public function getDateOuverture(): ?string
+    public function getDateouverture(): ?string
     {
-        return $this->date_ouverture;
+        return $this->dateouverture;
     }
 
-    public function setDateOuverture(string $date_ouverture): self
+    public function setDateouverture(?string $dateouverture): self
     {
-        $this->date_ouverture = $date_ouverture;
+        $this->dateouverture = $dateouverture;
 
         return $this;
     }
 
-    public function getDateFermuture(): ?string
+    public function getDatefermuture(): ?string
     {
-        return $this->date_fermuture;
+        return $this->datefermuture;
     }
 
-    public function setDateFermuture(?string $date_fermuture): self
+    public function setDatefermuture(?string $datefermuture): self
     {
-        $this->date_fermuture = $date_fermuture;
+        $this->datefermuture = $datefermuture;
 
         return $this;
     }

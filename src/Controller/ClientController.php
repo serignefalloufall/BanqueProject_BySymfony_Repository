@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Client;
 use App\Entity\Employeur;
 use App\Entity\Region;
 use App\Entity\Typeclient;
@@ -34,22 +35,82 @@ class ClientController extends AbstractController
         if(isset($_POST['btnAjouter']))
         {
             extract($_POST);
-            if($_POST['type_client_id'] == '3')
+            if($_POST['typeclient'] == '3')
             {
                 $emp = new Employeur();
-                $emp->setNumIdentification($numIdentification);
-                $emp->setRaisonSocial($raisonSocial);
+                $emp->setNumIdentification($numidentification);
+                $emp->setRaisonSocial($raisonsocial);
                 $emp->setNomEmployeur($nomemployeur);
                 $emp->setAdresseEmployeur($adresseemployeur);
+
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($emp);
                 $em->flush();
+
+                return $this->render('client/add.html.twig',$data);
+
+            }else if($_POST['typeclient'] == '2')
+            {
+                 // 1 represente typeclient salarie au niveau de la base
+
+                $cli = new Client();
+                $cli->setNom($nom);
+                $cli->setPrenom($prenom);
+                $cli->setAdresse($adresse);
+                $cli->setTel($tel);
+                $cli->setEmail($email);
+
+                $em = $this->getDoctrine()->getManager();
+                $tclient = $em->getRepository(Typeclient::class)->find($typeclient);
+
+                $cli->setTypeclient($tclient);
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($cli);
+                $em->flush();
+
+              
+                return $this->render('client/add.html.twig',$data);
+
+            }else if($_POST['typeclient'] == '1')
+            {
+                 // 2 represente typeclient non salarie au niveau de la base
+
+                $cli = new Client();
+               
+                $cli->setNom($nom);
+                $cli->setPrenom($prenom);
+                $cli->setAdresse($adresse);
+                $cli->setTel($tel);
+                $cli->setEmail($email);
+                $cli->setSalaire($salaire);
+                $cli->setProfession($profession);
+
+                $em = $this->getDoctrine()->getManager();
+                $tclient = $em->getRepository(Typeclient::class)->find($typeclient);
+
+                $cli->setTypeclient($tclient);
+
+                $emp = $em->getRepository(Employeur::class)->find($employeur);
+
+                $cli->setEmployeur($emp);
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($cli);
+                $em->flush();
+
+              
                 return $this->render('client/add.html.twig',$data);
             }
+          
+        }else{
 
+            return $this->render('client/add.html.twig',$data);
 
         }
-               
-        return $this->render('client/add.html.twig',$data);
+
+
     }
+               
+    
 }

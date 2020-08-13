@@ -20,7 +20,7 @@ class Employeur
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
+     * @ORM\Column(type="string", length=50)
      */
     private $numidentification;
 
@@ -30,23 +30,23 @@ class Employeur
     private $raisonsocial;
 
     /**
-     * @ORM\Column(type="string", length=60, nullable=true)
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $nomemployeur;
 
     /**
-     * @ORM\Column(type="string", length=60, nullable=true)
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $adresseemployeur;
 
     /**
-     * @ORM\OneToMany(targetEntity=Client::class, mappedBy="employeur_id")
+     * @ORM\OneToMany(targetEntity=Client::class, mappedBy="employeur")
      */
-    private $yes;
+    private $clients;
 
     public function __construct()
     {
-        $this->yes = new ArrayCollection();
+        $this->clients = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -59,7 +59,7 @@ class Employeur
         return $this->numidentification;
     }
 
-    public function setNumidentification(?string $numidentification): self
+    public function setNumidentification(string $numidentification): self
     {
         $this->numidentification = $numidentification;
 
@@ -105,28 +105,28 @@ class Employeur
     /**
      * @return Collection|Client[]
      */
-    public function getYes(): Collection
+    public function getClients(): Collection
     {
-        return $this->yes;
+        return $this->clients;
     }
 
-    public function addYe(Client $ye): self
+    public function addClient(Client $client): self
     {
-        if (!$this->yes->contains($ye)) {
-            $this->yes[] = $ye;
-            $ye->setEmployeurId($this);
+        if (!$this->clients->contains($client)) {
+            $this->clients[] = $client;
+            $client->setEmployeur($this);
         }
 
         return $this;
     }
 
-    public function removeYe(Client $ye): self
+    public function removeClient(Client $client): self
     {
-        if ($this->yes->contains($ye)) {
-            $this->yes->removeElement($ye);
+        if ($this->clients->contains($client)) {
+            $this->clients->removeElement($client);
             // set the owning side to null (unless already changed)
-            if ($ye->getEmployeurId() === $this) {
-                $ye->setEmployeurId(null);
+            if ($client->getEmployeur() === $this) {
+                $client->setEmployeur(null);
             }
         }
 

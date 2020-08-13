@@ -20,12 +20,12 @@ class Typecompte
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $libelle;
 
     /**
-     * @ORM\OneToMany(targetEntity=Compte::class, mappedBy="type_compte_id")
+     * @ORM\OneToMany(targetEntity=Compte::class, mappedBy="typecompte")
      */
     private $comptes;
 
@@ -44,7 +44,7 @@ class Typecompte
         return $this->libelle;
     }
 
-    public function setLibelle(string $libelle): self
+    public function setLibelle(?string $libelle): self
     {
         $this->libelle = $libelle;
 
@@ -63,7 +63,7 @@ class Typecompte
     {
         if (!$this->comptes->contains($compte)) {
             $this->comptes[] = $compte;
-            $compte->setTypeCompteId($this);
+            $compte->setTypecompte($this);
         }
 
         return $this;
@@ -74,8 +74,8 @@ class Typecompte
         if ($this->comptes->contains($compte)) {
             $this->comptes->removeElement($compte);
             // set the owning side to null (unless already changed)
-            if ($compte->getTypeCompteId() === $this) {
-                $compte->setTypeCompteId(null);
+            if ($compte->getTypecompte() === $this) {
+                $compte->setTypecompte(null);
             }
         }
 
