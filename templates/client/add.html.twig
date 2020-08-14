@@ -4,113 +4,43 @@
 
 {% block body %}
 
- <div class="contenue">
-
-        <div class="error" id="message_error"></div>
-        <form action=" {{ path('addClient')}} " method="POST" class="formClient" id="formClient" onsubmit="return validationClient()">
-
-            <fieldset class="fieldset">
-                <legend class="legend">Gestion des clients:</legend>
-                <div class="itemFieldset">
-                
-                    <div>
-                        <label for="">Type de client:</label>
-                        <select name="typeclient" id="type_client_id" onchange="verifTypeClient()">
-                           
-                            <option value="">Choisir un type de client</option>
-                            {% for t_client in listeTypeClient %}
-                            <option value="{{t_client.id}}">
-                                {{t_client.libelle}}
-                            </option>
-                            {% endfor %}
-                            
-                        </select>
-
-                        
-
-                    </div>
-            
-                    <div>
-                        <label for="">Nom</label>
-                        <input type="text" name="nom" id="nom" placeholder="Nom.....">
-                    </div>
-                    <div>
-                        <label for="">Prenom</label>
-                        <input type="text" name="prenom" id="prenom" placeholder="Prenom.....">
-                    </div>
-
-                    <div>
-                        <label for="">Adresse</label>
-                        <input type="text" name="adresse" id="adresse" placeholder="Adresse.....">
-                    </div>
-
-                    <div>
-                        <label for="">Telephone</label>
-                        <input type="text" name="tel" id="tel" placeholder="Telephone.....">
-                    </div>
-
-                    <div>
-                        <label for="">Email</label>
-                        <input type="text" name="email" id="email" placeholder="Email.....">
-                    </div>
-
-                    <div id="listeEmployeur" class="listeEmployeur">
-                        <label for="">Liste employeur:</label>
-                        <select name="employeur" id="employeur_id">
-                            <option value="">Votre entreprise</option>
-                             {% for emp in employeurs %}
-                            <option value="{{emp.id}}">
-                                {{emp.nomemployeur}}
-                            </option>
-                            {% endfor %}
-                        </select>
-
-                    </div>
-
-                </div>
-
-            </fieldset> 
-            
-            <fieldset class="fieldset" id="emp">
-                <legend class="legend">Information supplémentaire:</legend>
-                <div class="itemFieldset">
-
-                    <div>
-                        <label for="">Salaire</label>
-                        <input type="text" name="salaire" id="salaire" value="" placeholder="Salaire....." placeholder="salaire">
-                    </div>
-
-                    <div>
-                        <label for="">Profession</label>
-                        <input type="text" name="profession" id="profession" placeholder="Profession....."> 
-                    </div>
-                    <div id="ninea">
-                        <label for="">Ninea</label>
-                        <input type="text" name="numidentification" id="numIdentification" placeholder="Num identification.....">
-                    </div>
-
-                    <div id="raisonsocial">
-                        <label for="">Raison social</label>
-                        <input type="text" name="raisonsocial" id="raisonSocial" placeholder="Raison social.....">
-                    </div>
-
-                    <div id="nomemployeur">
-                        <label for="">Nom entreprise</label>
-                        <input type="text" name="nomemployeur" id="nom_employeur" placeholder="Nom entreprise.....">
-                    </div>
-                   
-                    <div id="adresseemployeur">
-                        <label for="">Adresse entreprise</label>
-                        <input type="text" name="adresseemployeur" id="adresse_employeur" placeholder="Adresse entreprise.....">
-                    </div>
-
-
-                </div>
-                <div class="btnSave">
-                    <input type="submit" name="btnAjouter" class="btn" value="Enregistrer"/>
-                </div>
-            </fieldset>    
-        </form>  
+<div class="row">
+  <div class="card col-md-6">
+    <div class="card-header"><h3>Liste des clients</h3></div>
+    <div class="card-body">
+        <table class="table table-hover">
+          <tdead>
+            <tr class="table-success">
+              <th scope="row">Identifiant</th>
+              <th>Nom client</th>
+              <th>Prenom client</th>
+              <th>Adresse client</th>
+            </tr>
+          </tdead>
+          <tbody>
+            {% for client in clients %}
+              <tr>
+                <td scope="col">{{ client.id }}</td>
+                <td scope="col">{{ client.nom }}</td>
+                <td scope="col">{{ client.prenom }}</td>
+                <td scope="col">{{ client.adresse }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
     </div>
+  </div>
+  
+  <div class="card col-md-6">
+    <div class="card-header">Formulaire de gestion des clients</div>
+    <div class="card-body">
+    
+      {{ form(formClient) }}
 
+    </div>
+  </div>
+</div>
+ 
+
+            
 {% endblock %}
