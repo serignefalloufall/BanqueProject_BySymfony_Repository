@@ -100,7 +100,7 @@ class ClientType extends AbstractType
                 [
                     'class' => Typeclient::class,
                     'choice_label' => 'libelle',
-                    'empty_data' => 'Choisir un type de client  ',
+                    'empty_data' => 'Choisir un type de client',
                     'attr' => array(
                         'class' => 'form-control form-group',
                         'id' => 'type_client_id'
