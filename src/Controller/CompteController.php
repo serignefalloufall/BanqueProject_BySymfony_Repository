@@ -2,12 +2,12 @@
 
 namespace App\Controller;
 
-use App\Entity\Agence;
-use App\Entity\Client;
 use App\Entity\Compte;
-use App\Entity\Typecompte;
+use App\Form\CompteType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
+
 
 class CompteController extends AbstractController
 {
@@ -21,132 +21,56 @@ class CompteController extends AbstractController
         ]);
     }
 
-     /**
-     * @Route("/addCompte", name="addCompte")
+    /**
+     * @Route("/compte/creer", name="compte_creer")
      */
-    public function add()
+    public function creer()
     {
+        //Cette fonction permet de crer l formulaire compte et
+        //envoyer la liste des client au view 
+
         $em = $this->getDoctrine()->getManager();
-        $data['listeTypeCompte'] = $em->getRepository(Typecompte::class)->findAll();
-        $data['clients'] = $em->getRepository(Client::class)->findAll();
-        $data['agences'] = $em->getRepository(Agence::class)->findAll();
-        //parametrage
-        $data['today'] = date("d/m/y"); 
-        $data['numcompte'] = 'Cmpt-'.$data['today']; 
-        $data['cleRip'] = 'Cle-rip-'.$data['today']; 
 
+        $compte = new Compte();
 
-        if(isset($_POST['btnAjouter']))
+        $form = $this->createForm(
+            CompteType::class,
+            $compte,
+            array('action' => $this->generateUrl('enregistrer_compte'))
+        );
+
+        $data['formCompte'] = $form->createView();
+
+        $data['comptes'] = $em->getRepository(Compte::class)->findAll();
+
+        return $this->render('compte/add.html.twig', $data);
+    }
+
+    /**
+     * @Route("/compte/enregistrer", name="enregistrer_compte")
+     */
+    public function add(Request $request)
+    {
+        //Cette function permet de requperer les info du formulaire
+
+        $compte = new Compte();
+
+        $form = $this->createForm(
+            CompteType::class,
+            $compte
+        );
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
         {
-         
-            extract($_POST);
-            // var_dump($_POST);
-            // die;
-           
-            $compteObject = new Compte();
-            //ici on cree un objet 
+            $compte = $form->getData();
 
-            if($_POST['typecompte'] == '1')
-            {
-              //1 represente typecompte epargne au niveau de la base
-              $compteObject->setNumCompte($numcompte);
-
-              $ag = $em->getRepository(Agence::class)->find($agence);
-
-              $compteObject->setAgence($ag);
-  
-              $compteObject->setCleRip($clerip);
-  
-              $compteObject->setFraisOuverture($fraisouverture);
-  
-              $compteObject->setDateOuverture($dateouverture);
-
-               //ici je recupere l objet type compte
-               $tcompte = $em->getRepository(Typecompte::class)->find($typecompte);
-
-              $compteObject->setTypecompte($tcompte);
-  
-               //ici je recupere l objet client
-              $cli = $em->getRepository(Client::class)->find($client);
-
-              $compteObject->setClient($cli);
-          
-             // $em = $this->getDoctrine()->getManager();
-                $em->persist($compteObject);
-                $em->flush();
-
-              
-                return $this->render('compte/add.html.twig',$data);
-
-            }else if($_POST['typecompte'] == '2')
-            {
-              //2 represente typecompte courant au niveau de la base
-    
-              $compteObject->setNumCompte($numcompte);
-
-              $ag = $em->getRepository(Agence::class)->find($agence);
-
-              $compteObject->setAgence($ag);
-  
-              $compteObject->setCleRip($clerip);
-  
-              $compteObject->setAgio($agio);
-
-              $compteObject->setDateouverture($dateouverture);
-
-              //ici je recupere l objet type compte
-              $tcompte = $em->getRepository(Typecompte::class)->find($typecompte);
-
-              $compteObject->setTypecompte($tcompte);
-
-              //ici je recupere l objet client
-              $cli = $em->getRepository(Client::class)->find($client);
-
-              $compteObject->setClient($cli);
-
-        
-                $em->persist($compteObject);
-                $em->flush();
-
-                  return $this->render('compte/add.html.twig',$data);
-
-            }else if($_POST['typecompte'] == '3')
-            {
-              //3 represente typecompte bloque au niveau de la base
-      
-              $compteObject->setNumCompte($numcompte);
-
-              $ag = $em->getRepository(Agence::class)->find($agence);
-
-              $compteObject->setAgence($ag);
-  
-              $compteObject->setCleRip($clerip);
-
-              $compteObject->setFraisouverture($fraisouverture);
-
-              $compteObject->setDateouverture($dateouverture);
-
-               //ici je recupere l objet type compte
-               $tcompte = $em->getRepository(Typecompte::class)->find($typecompte);
-
-               $compteObject->setTypecompte($tcompte);
- 
-               //ici je recupere l objet client
-               $cli = $em->getRepository(Client::class)->find($client);
- 
-               $compteObject->setClient($cli);
-      
-               $em->persist($compteObject);
-               $em->flush();
-
-                 return $this->render('compte/add.html.twig',$data);
-            }
-          
-        }else{
-
-            return $this->render('compte/add.html.twig',$data);
-
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($compte);
+            $em->flush();
         }
 
+        return $this->redirectToRoute('compte_creer');
     }
 }

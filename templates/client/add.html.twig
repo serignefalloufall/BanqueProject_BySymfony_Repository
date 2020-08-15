@@ -1,46 +1,66 @@
 {% extends 'accueil.html.twig' %}
 
-{% block title %} Gestion client {% endblock %}
+{% block title %}
+  Gestion client
+{% endblock %}
 
 {% block body %}
-
-<div class="row">
-  <div class="card col-md-6">
-    <div class="card-header"><h3>Liste des clients</h3></div>
-    <div class="card-body">
+  <div class="row">
+    <div class="card col-md-6">
+      <div class="card-header">
+        <h3>
+          Liste des clients
+        </h3>
+      </div>
+      <div class="card-body">
         <table class="table table-hover">
           <tdead>
             <tr class="table-success">
-              <th scope="row">Identifiant</th>
-              <th>Nom client</th>
-              <th>Prenom client</th>
-              <th>Adresse client</th>
+              <th scope="row">
+                Identifiant
+              </th>
+              <th>
+                Nom client
+              </th>
+              <th>
+                Prenom client
+              </th>
+              <th>
+                Adresse client
+              </th>
             </tr>
           </tdead>
           <tbody>
             {% for client in clients %}
               <tr>
-                <td scope="col">{{ client.id }}</td>
-                <td scope="col">{{ client.nom }}</td>
-                <td scope="col">{{ client.prenom }}</td>
-                <td scope="col">{{ client.adresse }}</td>
+                <td scope="col">
+                  {{ client.id }}
+                </td>
+                <td scope="col">
+                  {{ client.nom }}
+                </td>
+                <td scope="col">
+                  {{ client.prenom }}
+                </td>
+                <td scope="col">
+                  {{ client.adresse }}
+                </td>
               </tr>
             {% endfor %}
           </tbody>
         </table>
+      </div>
+    </div>
+
+    <div class="card col-md-6">
+      <div class="card-header">
+        <h3>
+          Formulaire de gestion des clients
+        </h3>
+      </div>
+      <div class="card-body">
+        {{ form(formClient) }}
+      </div>
     </div>
   </div>
-  
-  <div class="card col-md-6">
-    <div class="card-header">Formulaire de gestion des clients</div>
-    <div class="card-body">
-    
-      {{ form(formClient) }}
-
-    </div>
-  </div>
-</div>
- 
-
-            
 {% endblock %}

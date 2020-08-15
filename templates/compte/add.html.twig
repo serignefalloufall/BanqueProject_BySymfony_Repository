@@ -1,10 +1,67 @@
 {% extends 'accueil.html.twig' %}
 
-{% block title %} Gestion compte {% endblock %}
+{% block title %}
+  Gestion compte
+{% endblock %}
 
 {% block body %}
+  <div class="row">
+    <div class="card col-md-6">
+      <div class="card-header">
+        <h3>
+          Liste des comptes
+        </h3>
+      </div>
+      <div class="card-body">
+        <table class="table table-hover">
+          <tdead>
+            <tr class="table-success">
+              <th scope="row">
+                Identifiant
+              </th>
+              <th>
+                Numero compte
+              </th>
+              <th>
+                Cle rib
+              </th>
+              <th>
+                Frais ouverture
+              </th>
+            </tr>
+          </tdead>
+          <tbody>
+            {% for compte in comptes %}
+              <tr>
+                <td scope="col">
+                  {{ compte.id }}
+                </td>
+                <td scope="col">
+                  {{ compte.numcompte }}
+                </td>
+                <td scope="col">
+                  {{ compte.clerip }}
+                </td>
+                <td scope="col">
+                  {{ compte.fraisouverture }}
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
 
- Gestion Compte
-    
-    
+    <div class="card col-md-6">
+      <div class="card-header">
+        <h3>
+          Formulaire de gestion des comptes
+        </h3>
+      </div>
+      <div class="card-body">
+        {# pour commenter en twig #}
+         {{ form(formCompte) }}
+      </div>
+    </div>
+  </div>
 {% endblock %}

@@ -2,9 +2,10 @@
 
 namespace App\Form;
 
+use App\Entity\Agence;
 use App\Entity\Client;
-use App\Entity\Employeur;
-use App\Entity\Typeclient;
+use App\Entity\Compte;
+use App\Entity\Typecompte;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -12,115 +13,114 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ClientType extends AbstractType
+class CompteType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add(
-                'nom',
-                TextType::class,
-                array(
+                'client',
 
-                    'label' => 'Nom',
-                    'attr' => array(
-                        'class' => 'form-control form-group'
-                    )
-                )
-            )
-            ->add(
-                'prenom',
-                TextType::class,
-                array(
-                    'label' => 'Prenom',
-                    'attr' => array(
-
-                        'class' => 'form-control form-group'
-                    )
-                )
-            )
-            ->add(
-                'adresse',
-                TextType::class,
-                array(
-                    'label' => 'Adresse',
-                    'attr' => array(
-
-                        'class' => 'form-control form-group'
-                    )
-                )
-            )
-            ->add(
-                'tel',
-                TextType::class,
-                array(
-                    'label' => 'Telephone',
-                    'attr' => array(
-                        //'require'=>'require',
-                        'class' => 'form-control form-group'
-                    )
-                )
-            )
-            ->add(
-                'email',
-                TextType::class,
-                array(
-                    'label' => 'Email',
-                    'attr' => array(
-
-                        'class' => 'form-control form-group'
-                    )
-                )
-            )
-            ->add(
-                'profession',
-                TextType::class,
-                array(
-                    'label' => 'Profession',
-                    'attr' => array(
-
-                        'class' => 'form-control form-group'
-                    )
-                )
-            )
-            ->add(
-                'salaire',
-                TextType::class,
-                array(
-                    'label' => 'Salaire',
-                    'attr' => array(
-
-                        'class' => 'form-control form-group'
-                    )
-                )
-            )
-            ->add(
-                'typeclient',
                 EntityType::class,
-                [
-                    'class' => Typeclient::class,
-                    'choice_label' => 'libelle',
-                    'empty_data' => 'Choisir un type de client  ',
-                    'attr' => array(
-                        'class' => 'form-control form-group',
-                        'id' => 'type_client_id'
-                    )
-                ]
-            )
-            ->add(
-                'employeur',
-                EntityType::class,
-                [
-                    'class' => Employeur::class,
-                    'choice_label' => 'nomemployeur',
+                array(
+                    'class' => Client::class,
+                    'label' => 'Client',
                     'attr' => array(
                         'class' => 'form-control form-group'
                     )
-                ]
+                )
             )
-            //test
-           
-            //finTest
+            ->add(
+                'typecompte',
+
+                EntityType::class,
+                array(
+                    'class' => Typecompte::class,
+                    'label' => 'Type compte',
+                    'attr' => array(
+                        'class' => 'form-control form-group'
+                    )
+                )
+            )
+            ->add(
+                'agence',
+
+                EntityType::class,
+                array(
+                    'class' => Agence::class,
+                    'label' => 'Agence',
+                    'attr' => array(
+                        'class' => 'form-control form-group'
+                    )
+                )
+            )   
+            ->add(
+                'numcompte',
+
+                TextType::class,
+                array(
+
+                    'label' => 'Numero compte',
+                    'attr' => array(
+                        'class' => 'form-control form-group'
+                    )
+                )
+            )
+            ->add(
+                'clerip',
+                TextType::class,
+                array(
+
+                    'label' => 'Cle rib',
+                    'attr' => array(
+                        'class' => 'form-control form-group'
+                    )
+                )
+            )
+            ->add(
+                'fraisouverture',
+                TextType::class,
+                array(
+
+                    'label' => 'Frais ouverture',
+                    'attr' => array(
+                        'class' => 'form-control form-group'
+                    )
+                )
+            )
+            ->add(
+                'agio',
+                TextType::class,
+                array(
+
+                    'label' => 'Agio',
+                    'attr' => array(
+                        'class' => 'form-control form-group'
+                    )
+                )
+            )
+            ->add(
+                'dateouverture',
+                TextType::class,
+                array(
+
+                    'label' => 'Date ouverture',
+                    'attr' => array(
+                        'class' => 'form-control form-group'
+                    )
+                )
+            )
+            ->add(
+                'datefermuture',
+                TextType::class,
+                array(
+
+                    'label' => 'Date fermuture',
+                    'attr' => array(
+                        'class' => 'form-control form-group'
+                    )
+                )
+            )
 
             ->add('valider', SubmitType::class, array('attr' => array('class' => 'btn btn-success btn-lg btn-block form-group')));
     }
@@ -128,7 +128,7 @@ class ClientType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Client::class,
+            'data_class' => Compte::class,
         ]);
     }
 }
